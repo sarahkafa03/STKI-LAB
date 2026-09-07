@@ -384,8 +384,7 @@ function defaultDocuments(){
 var STEPS = [
   { id:1, key:"dokumen", name:"Dokumen", sub:"Kumpulan teks masukan",
     heading:"Dokumen",
-    explain:"Tahap ini adalah <strong>titik awal</strong> dari seluruh pipeline STKI: menyiapkan kumpulan dokumen teks berbahasa Indonesia yang akan diolah. Minimal 5 dokumen digunakan agar setiap tahap berikutnya (khususnya pembobotan dan pengindeksan) dapat diuji secara berarti pada kumpulan dokumen (corpus), bukan hanya satu teks. Anda dapat mengedit judul dan isi setiap dokumen sebelum menjalankan proses.",
-    runLabel:"Muat Dokumen ke Pipeline" },
+    explain:"Tahap ini adalah <strong>titik awal</strong> dari seluruh pipeline STKI: menyiapkan kumpulan dokumen teks berbahasa Indonesia yang akan diolah. :"Muat Dokumen ke Pipeline" },
   { id:2, key:"parsing", name:"Parsing", sub:"Ekstraksi & normalisasi teks",
     heading:"Parsing",
     explain:"<strong>Parsing</strong> mengekstrak teks mentah dan merapikan strukturnya sebelum dianalisis lebih lanjut — pada sistem nyata tahap ini biasanya menghapus tag/markup dari file sumber (HTML, PDF, DOCX). Pada demo ini, parsing menormalkan spasi berlebih, baris kosong, dan tab menjadi teks satu baris yang bersih, tanpa mengubah kata sedikit pun.",
