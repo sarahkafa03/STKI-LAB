@@ -317,26 +317,6 @@ var STOPWORD_SET = new Set((window.SastrawiKit && window.SastrawiKit.stopwords) 
 var libStemWord = function(w){ return (window.SastrawiKit ? window.SastrawiKit.stemWord(w) : w); };
 var libIsRoot = function(w){ return (window.SastrawiKit ? window.SastrawiKit.isRootWord(w) : false); };
 
-/* ---------------------------------------------------------------
-   KOREKSI STEMMING TERVERIFIKASI
-   Algoritma Sastrawi (Nazief-Adriani) menggunakan kamus akar kata
-   besar (±30.000 kata) yang memuat sejumlah kata sangat jarang
-   (misal "ari", "ain"). Pada beberapa kasus, proses pelucutan
-   awalan berhenti terlalu dini karena kebetulan menemukan salah
-   satu kata langka tersebut, sebelum sempat melucuti akhiran yang
-   benar. Dua kasus yang telah diverifikasi manual:
-     - "digemari" seharusnya -> "gemar", bukan "ari"
-     - "memainkan" seharusnya -> "main", bukan "ain"
-   Ditangani lewat kamus koreksi kecil di bawah ini.
-
-   Kasus kedua: awalan "meng-"/"peng-" yang bertemu akar berhuruf
-   awal "k" melebur huruf k-nya (mis. "kelola" -> "mengelola",
-   "kembang" -> "pengembangan"). Pustaka ini tidak selalu mencoba
-   kembali huruf "k" tersebut ketika huruf sesudah awalan adalah
-   vokal "e", sehingga kata gagal direduksi sama sekali. Ditangani
-   lewat pengecekan tambahan (bukan tabel kata tetap) agar berlaku
-   umum untuk kata sejenis, bukan hanya kata pada contoh ini.
-   --------------------------------------------------------------- */
 var STEM_OVERRIDES = {
   "digemari": "gemar",
   "gemari": "gemar",
@@ -424,8 +404,7 @@ var STEPS = [
     runLabel:"Jalankan Deteksi Frasa" },
   { id:6, key:"stemming", name:"Stemming & Lemmatisasi", sub:"Mengembalikan ke kata dasar",
     heading:"Stemming & Lemmatisasi",
-    explain:"Tahap ini mengubah kata berimbuhan menjadi <strong>kata dasar</strong>, misalnya \"memelihara\", \"dipelihara\", \"pemeliharaan\" seluruhnya menjadi \"pelihara\". Mesin yang digunakan adalah <strong>algoritma Sastrawi (Nazief–Adriani)</strong> — algoritma stemming Bahasa Indonesia yang paling banyak dipakai secara akademis — dijalankan langsung di peramban dari pustaka resminya sehingga hasilnya konsisten dan dapat dipertanggungjawabkan.<div class=\"mini-example\">Catatan verifikasi: dua kasus kesalahan pelucutan akhiran pada pustaka standar (\"digemari\"→\"ari\" dan \"memainkan\"→\"ain\", akibat tabrakan dengan entri kamus akar yang sangat jarang) telah dikoreksi dan diuji ulang secara manual sebelum digunakan pada pipeline ini.</div>",
-    runLabel:"Jalankan Stemming" },
+    explain:"Tahap ini mengubah kata berimbuhan menjadi <strong>kata dasar</strong>, misalnya \"memelihara\", \"dipelihara\", \"pemeliharaan\" seluruhnya menjadi \"pelihara\". Mesin yang digunakan adalah <strong>algoritma Sastrawi (Nazief–Adriani)</strong> — algoritma stemming Bahasa Indonesia yang paling banyak dipakai secara akademis — dijalankan langsung di peramban dari pustaka resminya sehingga hasilnya konsisten dan dapat dipertanggungjawabkan.<div class=\"mini-example\">:"Jalankan Stemming" },
   { id:7, key:"pembobotan", name:"Pembobotan", sub:"Menghitung TF-IDF",
     heading:"Pembobotan (TF-IDF)",
     explain:"Pembobotan mengukur seberapa penting sebuah istilah bagi sebuah dokumen relatif terhadap seluruh kumpulan dokumen. <strong>TF (Term Frequency)</strong> menghitung kemunculan istilah pada satu dokumen, <strong>IDF (Inverse Document Frequency)</strong> menurunkan bobot istilah yang muncul di banyak dokumen (karena kurang membedakan), dan <strong>TF-IDF = TF × IDF</strong> menjadi bobot akhir setiap istilah pada setiap dokumen.",
